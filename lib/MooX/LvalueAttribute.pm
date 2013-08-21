@@ -8,7 +8,7 @@
 #
 package MooX::LvalueAttribute;
 {
-  $MooX::LvalueAttribute::VERSION = '0.11';
+  $MooX::LvalueAttribute::VERSION = '0.12';
 }
 use strictures 1;
 
@@ -71,7 +71,6 @@ sub import {
 }
 
 
-
 1;
 
 __END__
@@ -83,9 +82,11 @@ MooX::LvalueAttribute - Provides Lvalue accessors to Moo class attributes
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 SYNOPSIS
+
+=head2 From a Moo class
 
   package App;
   use Moo;
@@ -102,13 +103,33 @@ version 0.11
   $app->name = 'Bar';
   print $app->name;  # Bar
 
-=head1 DESCRIPTION
+=head2 From a Moo role
 
-B<WARNING>: this module is in its early stage, its API may change.
+  package MyRole;
+  use Moo::Role;
+  use MooX::LvalueAttribute;
+
+  package App;
+  use Moo;
+  with('MyRole');
+  
+  has name => (
+    is => 'rw',
+    lvalue => 1,
+  );
+
+  # Elsewhere
+
+  my $app = App->new(name => 'foo');
+  $app->name = 'Bar';
+  print $app->name;  # Bar
+
+=head1 DESCRIPTION
 
 This modules provides Lvalue accessors to your Moo attributes. It won't break
 Moo's encapsulation, and will properly call any accessor method modifiers,
-triggers, builders and default values creation.
+triggers, builders and default values creation. It can be used from a Moo class
+or role.
 
 It means that instead of writing:
 

@@ -8,7 +8,7 @@
 #
 package Method::Generate::Accessor::Role::LvalueAttribute;
 {
-  $Method::Generate::Accessor::Role::LvalueAttribute::VERSION = '0.11';
+  $Method::Generate::Accessor::Role::LvalueAttribute::VERSION = '0.12';
 }
 use strictures 1;
 
@@ -88,7 +88,7 @@ Method::Generate::Accessor::Role::LvalueAttribute - Provides Lvalue accessors to
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 AUTHOR
 
