@@ -10,7 +10,7 @@ configure_requires:
   ExtUtils::MakeMaker: 6.30
   Module::Build: 0.3601
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 4.300028, CPAN::Meta::Converter version 2.120921'
+generated_by: 'Dist::Zilla version 4.300030, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -19,16 +19,15 @@ name: MooX-LvalueAttribute
 provides:
   Method::Generate::Accessor::Role::LvalueAttribute:
     file: lib/Method/Generate/Accessor/Role/LvalueAttribute.pm
-    version: 0.10
+    version: 0.11
   MooX::LvalueAttribute:
     file: lib/MooX/LvalueAttribute.pm
-    version: 0.10
+    version: 0.11
 requires:
   Hash::Util::FieldHash::Compat: 0
   Moo: 1.000008
   Variable::Magic: 0.52
   strictures: 1
 resources:
-  bugtracker: https://github.com/dams/moox-lvalueattribute/issues
-  repository: git://github.com/dams/moox-lvalueattribute.git
-version: 0.10
+  repository: git://github.com/dams/MooX-LvalueAttribute.git
+version: 0.11

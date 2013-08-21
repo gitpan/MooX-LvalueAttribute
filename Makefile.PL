@@ -30,7 +30,7 @@ my %WriteMakefileArgs = (
     "Variable::Magic" => "0.52",
     "strictures" => 1
   },
-  "VERSION" => "0.10",
+  "VERSION" => "0.11",
   "test" => {
     "TESTS" => "t/*.t"
   }

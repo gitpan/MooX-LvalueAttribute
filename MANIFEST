@@ -11,5 +11,6 @@ lib/Method/Generate/Accessor/Role/LvalueAttribute.pm
 lib/MooX/LvalueAttribute.pm
 t/00-compile.t
 t/lvalue.t
+t/lvalue_in_role.t
 t/release-distmeta.t
 t/release-pod-coverage.t

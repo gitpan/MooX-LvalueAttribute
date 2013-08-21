@@ -8,7 +8,7 @@
 #
 package Method::Generate::Accessor::Role::LvalueAttribute;
 {
-  $Method::Generate::Accessor::Role::LvalueAttribute::VERSION = '0.10';
+  $Method::Generate::Accessor::Role::LvalueAttribute::VERSION = '0.11';
 }
 use strictures 1;
 
@@ -21,12 +21,17 @@ use Hash::Util::FieldHash::Compat;
 
 Hash::Util::FieldHash::Compat::fieldhash my %LVALUES;
 
+require MooX::LvalueAttribute;
+
 around generate_method => sub {
     my $orig = shift;
     my $self = shift;
     # would like a better way to disable XS
     
     my ($into, $name, $spec, $quote_opts) = @_;
+
+    $MooX::LvalueAttribute::INJECTED_IN{$into}
+      or return $self->$orig(@_);
 
     if ($spec->{lvalue}) {
 
@@ -75,7 +80,6 @@ around generate_method => sub {
 1;
 
 __END__
-
 =pod
 
 =head1 NAME
@@ -84,7 +88,7 @@ Method::Generate::Accessor::Role::LvalueAttribute - Provides Lvalue accessors to
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 AUTHOR
 
@@ -98,3 +102,4 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
+
