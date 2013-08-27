@@ -8,7 +8,7 @@
 #
 package MooX::LvalueAttribute;
 {
-  $MooX::LvalueAttribute::VERSION = '0.12';
+  $MooX::LvalueAttribute::VERSION = '0.13';
 }
 use strictures 1;
 
@@ -17,52 +17,35 @@ use strictures 1;
 require Moo;
 require Moo::Role;
 
-our %INJECTED_IN;
-our %OVERRIDEN;
+our %INJECTED_IN_ROLE;
+our %INJECTED_IN_CLASS;
 
 sub import {
     my $class = shift;
     my $target = caller;
 
     if ($Moo::Role::INFO{$target} && $Moo::Role::INFO{$target}{is_role}) {
-        # We are loaded from a Moo::Role
-        if (! $OVERRIDEN{$target} ) {
-            # We don't know yet in which class the role will be consumed, so we
-            # have to work around that, and defer the injection
-    
-            my $old_accessor_maker = Moo->can('_accessor_maker_for');
-    
-            my $new_accessor_maker_for = sub {
-                my ($class, $role_target) = @_;
-                my $maker = $old_accessor_maker->(@_);
-                defined $maker
-                  or return;
-                $role_target->can('__lvalue_attr_mode')
-                  && $role_target->__lvalue_attr_mode
-                  && ! $INJECTED_IN{$role_target}
-                    or return $maker;
-                Moo::Role->apply_roles_to_object(
-                    $maker,
-                    'Method::Generate::Accessor::Role::LvalueAttribute',
-                );
-                $INJECTED_IN{$role_target} = 1;
-                return $maker;
-            };
-    
-            no strict 'refs';
-            no warnings 'redefine';
-            *{"${target}::__lvalue_attr_mode"} = sub { 1 }; 
-            *Moo::_accessor_maker_for = $new_accessor_maker_for;
-            $OVERRIDEN{$target} = 1
-        }
+
+        # We are loaded from a Moo role
+        $Moo::Role::INFO{$target}{accessor_maker} ||= do {
+            require Method::Generate::Accessor;
+            Method::Generate::Accessor->new
+          };
+        Moo::Role->apply_roles_to_object(
+            $Moo::Role::INFO{$target}{accessor_maker},
+            'Method::Generate::Accessor::Role::LvalueAttribute',
+        );
+        $INJECTED_IN_ROLE{$target} = 1;
+
     } elsif ($Moo::MAKERS{$target} && $Moo::MAKERS{$target}{is_class}) {
+
         # We are loaded from a Moo class
-        if ( !$INJECTED_IN{$target} ) {
+        if ( !$INJECTED_IN_CLASS{$target} ) {
             Moo::Role->apply_roles_to_object(
               Moo->_accessor_maker_for($target),
               'Method::Generate::Accessor::Role::LvalueAttribute',
             );
-            $INJECTED_IN{$target} = 1;        
+            $INJECTED_IN_CLASS{$target} = 1;        
         }
     } else {
         die "MooX::LvalueAttribute can only be used in Moo classes or Moo roles.";        
@@ -82,7 +65,7 @@ MooX::LvalueAttribute - Provides Lvalue accessors to Moo class attributes
 
 =head1 VERSION
 
-version 0.12
+version 0.13
 
 =head1 SYNOPSIS
 
@@ -109,14 +92,14 @@ version 0.12
   use Moo::Role;
   use MooX::LvalueAttribute;
 
-  package App;
-  use Moo;
-  with('MyRole');
-  
   has name => (
     is => 'rw',
     lvalue => 1,
   );
+
+  package App;
+  use Moo;
+  with('MyRole');
 
   # Elsewhere
 
@@ -142,7 +125,7 @@ you can use:
 =head1 ATTRIBUTE SPECIFICATION
 
 To enable Lvalue access to your attribute, simply use C<MooX::LvalueAttribute>
-in the class, and add:
+in the class or role, and add:
 
   lvalue => 1,
 
@@ -151,7 +134,8 @@ in the attribute specification (see synopsis).
 =head1 NOTE ON IMPLEMENTATION
 
 The implementation doesn't use AUTOLOAD, nor TIESCALAR. Instead, it uses a
-custom accessor and C<Variable::Magic>, which is faster than the tie mechanism.
+custom accessor and C<Variable::Magic>, which is faster and cheaper than the
+tie / AUTOLOAD mechanisms.
 
 =head1 AUTHOR
 

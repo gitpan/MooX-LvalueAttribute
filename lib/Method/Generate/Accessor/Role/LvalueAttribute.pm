@@ -8,7 +8,7 @@
 #
 package Method::Generate::Accessor::Role::LvalueAttribute;
 {
-  $Method::Generate::Accessor::Role::LvalueAttribute::VERSION = '0.12';
+  $Method::Generate::Accessor::Role::LvalueAttribute::VERSION = '0.13';
 }
 use strictures 1;
 
@@ -30,7 +30,8 @@ around generate_method => sub {
     
     my ($into, $name, $spec, $quote_opts) = @_;
 
-    $MooX::LvalueAttribute::INJECTED_IN{$into}
+    $MooX::LvalueAttribute::INJECTED_IN_ROLE{$into}
+      || $MooX::LvalueAttribute::INJECTED_IN_CLASS{$into}
       or return $self->$orig(@_);
 
     if ($spec->{lvalue}) {
@@ -88,7 +89,7 @@ Method::Generate::Accessor::Role::LvalueAttribute - Provides Lvalue accessors to
 
 =head1 VERSION
 
-version 0.12
+version 0.13
 
 =head1 AUTHOR
 
