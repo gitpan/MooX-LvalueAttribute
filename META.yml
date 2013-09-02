@@ -21,10 +21,10 @@ name: MooX-LvalueAttribute
 provides:
   Method::Generate::Accessor::Role::LvalueAttribute:
     file: lib/Method/Generate/Accessor/Role/LvalueAttribute.pm
-    version: 0.14
+    version: 0.15
   MooX::LvalueAttribute:
     file: lib/MooX/LvalueAttribute.pm
-    version: 0.14
+    version: 0.15
 requires:
   Hash::Util::FieldHash::Compat: 0
   Moo: 1.000008
@@ -32,4 +32,4 @@ requires:
   strictures: 1
 resources:
   repository: git://github.com/dams/moox-lvalueattribute.git
-version: 0.14
+version: 0.15
