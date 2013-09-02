@@ -18,7 +18,7 @@ my %module_build_args = (
     "Damien \"dams\" Krotkine"
   ],
   "dist_name" => "MooX-LvalueAttribute",
-  "dist_version" => "0.13",
+  "dist_version" => "0.14",
   "license" => "perl",
   "module_name" => "MooX::LvalueAttribute",
   "recommends" => {},
@@ -32,9 +32,8 @@ my %module_build_args = (
   "script_files" => [],
   "test_requires" => {
     "Capture::Tiny" => 0,
+    "Devel::Hide" => 0,
     "Test::More" => "0.88",
-    "Test::Most" => 0,
-    "Test::Pretty" => 0,
     "blib" => 0
   }
 );

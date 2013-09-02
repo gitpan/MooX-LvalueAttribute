@@ -8,7 +8,7 @@
 #
 package Method::Generate::Accessor::Role::LvalueAttribute;
 {
-  $Method::Generate::Accessor::Role::LvalueAttribute::VERSION = '0.13';
+  $Method::Generate::Accessor::Role::LvalueAttribute::VERSION = '0.14';
 }
 use strictures 1;
 
@@ -54,7 +54,10 @@ around generate_method => sub {
         }
     }
 
-    my $methods = $self->$orig(@_);
+    my $methods = do {
+        local $Method::Generate::Accessor::CAN_HAZ_XS = 0;
+        $self->$orig(@_);
+    };
 
     foreach ( qw(writer accessor) ) {
         my $lv_name = $spec->{'lv_' . $_}
@@ -89,7 +92,7 @@ Method::Generate::Accessor::Role::LvalueAttribute - Provides Lvalue accessors to
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 AUTHOR
 

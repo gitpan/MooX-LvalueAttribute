@@ -4,10 +4,9 @@ author:
   - "Damien \"dams\" Krotkine"
 build_requires:
   Capture::Tiny: 0
+  Devel::Hide: 0
   Module::Build: 0.3601
   Test::More: 0.88
-  Test::Most: 0
-  Test::Pretty: 0
   blib: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.30
@@ -22,10 +21,10 @@ name: MooX-LvalueAttribute
 provides:
   Method::Generate::Accessor::Role::LvalueAttribute:
     file: lib/Method/Generate/Accessor/Role/LvalueAttribute.pm
-    version: 0.13
+    version: 0.14
   MooX::LvalueAttribute:
     file: lib/MooX/LvalueAttribute.pm
-    version: 0.13
+    version: 0.14
 requires:
   Hash::Util::FieldHash::Compat: 0
   Moo: 1.000008
@@ -33,4 +32,4 @@ requires:
   strictures: 1
 resources:
   repository: git://github.com/dams/moox-lvalueattribute.git
-version: 0.13
+version: 0.14
