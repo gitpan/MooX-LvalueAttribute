@@ -8,7 +8,7 @@
 #
 package Method::Generate::Accessor::Role::LvalueAttribute;
 {
-  $Method::Generate::Accessor::Role::LvalueAttribute::VERSION = '0.15';
+  $Method::Generate::Accessor::Role::LvalueAttribute::VERSION = '0.16';
 }
 use strictures 1;
 
@@ -27,7 +27,7 @@ around generate_method => sub {
     my $orig = shift;
     my $self = shift;
     # would like a better way to disable XS
-    
+
     my ($into, $name, $spec, $quote_opts) = @_;
 
     $MooX::LvalueAttribute::INJECTED_IN_ROLE{$into}
@@ -65,8 +65,14 @@ around generate_method => sub {
             my $self = shift;
             if (! exists $LVALUES{$self}{$lv_name}) {
                 my $wiz = wizard(
-                 set  => sub { $self->$name(${$_[0]}) },
-                 get => sub { ${$_[0]} = $self->$name() },
+                 set  => sub {
+                     $self->$name(${$_[0]});
+                     return 1;
+                 },
+                 get => sub {
+                     ${$_[0]} = $self->$name();
+                     return 1;
+                 },
                 );
                 cast $LVALUES{$self}{$lv_name}, $wiz;
             }
@@ -89,7 +95,7 @@ Method::Generate::Accessor::Role::LvalueAttribute - Provides Lvalue accessors to
 
 =head1 VERSION
 
-version 0.15
+version 0.16
 
 =head1 AUTHOR
 

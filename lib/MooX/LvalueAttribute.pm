@@ -8,7 +8,7 @@
 #
 package MooX::LvalueAttribute;
 {
-  $MooX::LvalueAttribute::VERSION = '0.15';
+  $MooX::LvalueAttribute::VERSION = '0.16';
 }
 use strictures 1;
 
@@ -65,7 +65,7 @@ MooX::LvalueAttribute - Provides Lvalue accessors to Moo class attributes
 
 =head1 VERSION
 
-version 0.15
+version 0.16
 
 =head1 SYNOPSIS
 

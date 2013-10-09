@@ -3,11 +3,12 @@ abstract: 'Provides Lvalue accessors to Moo class attributes'
 author:
   - "Damien \"dams\" Krotkine"
 build_requires:
-  Capture::Tiny: 0
   Devel::Hide: 0
+  File::Spec: 0
+  IO::Handle: 0
+  IPC::Open3: 0
   Module::Build: 0.3601
-  Test::More: 0.88
-  blib: 0
+  Test::More: 0
 configure_requires:
   ExtUtils::MakeMaker: 6.30
   Module::Build: 0.3601
@@ -21,15 +22,16 @@ name: MooX-LvalueAttribute
 provides:
   Method::Generate::Accessor::Role::LvalueAttribute:
     file: lib/Method/Generate/Accessor/Role/LvalueAttribute.pm
-    version: 0.15
+    version: 0.16
   MooX::LvalueAttribute:
     file: lib/MooX/LvalueAttribute.pm
-    version: 0.15
+    version: 0.16
 requires:
   Hash::Util::FieldHash::Compat: 0
   Moo: 1.000008
   Variable::Magic: 0.52
   strictures: 1
 resources:
+  bugtracker: https://github.com/dams/moox-lvalueattribute/issues
   repository: git://github.com/dams/moox-lvalueattribute.git
-version: 0.15
+version: 0.16
